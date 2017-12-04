@@ -4,7 +4,7 @@
     <ul>
       <li v-for="task in tasks" :key="task.id">
         {{ task.task }}
-        <button>Selesai</button>
+        <button @click="setFinish(task.id)">Selesai</button>
         </li>
     </ul>
   </div>
@@ -15,6 +15,11 @@ export default {
   data () {
     return {
       msg: 'Daftar Tugas'
+    }
+  },
+  methods:  {
+    setFinish(id){
+       this.$store.commit('finish',id)
     }
   },
   computed: {

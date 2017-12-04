@@ -33,5 +33,12 @@ export const store = new Vuex.Store({
                 return task.status
             })
         }
+    },
+    mutations: {
+        finish(state, userId) {
+            var task = state.tasks.find(o => o.id == userId)
+            var index = state.tasks.indexOf(task)
+            state.tasks[index].status = true
+        },
     }
 })
