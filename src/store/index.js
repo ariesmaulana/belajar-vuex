@@ -5,22 +5,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        tasks: [{
-            id: 1,
-            task: 'Nafas',
-            status: true
-        },
-        {
-            id: 2,
-            task: 'Makan',
-            status: false
-        },
-        {
-            id: 3,
-            task: 'Mandi',
-            status: false
-        }
-        ]
+        tasks: []
     },
     getters: {
         getTask(state) {
@@ -40,5 +25,35 @@ export const store = new Vuex.Store({
             var index = state.tasks.indexOf(task)
             state.tasks[index].status = true
         },
+        populate(state, data) {
+            state.tasks = data
+        }
+    },
+    actions: {
+        getTask(context) {
+            axios.get('http://127.0.0.1:8000/api/list-task')
+                .then(function (response) {
+                    context.commit('populate', response.data)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        setFinished(context, userId) {
+            axios.post('http://127.0.0.1:8000/api/update-task/', {
+                id: userId
+            }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(function (response) {
+                    context.commit('finish', userId)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+        }
     }
 })

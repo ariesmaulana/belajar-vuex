@@ -17,9 +17,12 @@ export default {
       msg: 'Daftar Tugas'
     }
   },
+  created() {
+    this.$store.dispatch('getTask')
+  },
   methods:  {
     setFinish(id){
-       this.$store.commit('finish',id)
+       this.$store.dispatch('setFinished',id)
     }
   },
   computed: {
